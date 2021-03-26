@@ -21,9 +21,9 @@ app.use('/api/user',userRoute);
 
 createConnection({
     type: 'postgres',
-    username: 'freak2810',
-    password: 'Sheena&mani01',
-    database: 'mediumclone',
+    username: 'Aditya',
+    password: 'shubhasya',
+    database: 'mediumClone',
     entities: [Article, User],
     synchronize: true,
     dropSchema: true, // TODO: Not for production

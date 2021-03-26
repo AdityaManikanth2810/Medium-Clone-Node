@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 
-@Entity()
+@Entity('users')
 export class User {
     @PrimaryColumn()
     email: string;
@@ -17,6 +17,14 @@ export class User {
 
     @Column({ nullable: true })
     image?: string;
+
+    token?:string;
+
+    constructor(email:string,username:string,password:string) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+    }
 
     // @OneToMany(() => Article, article => article.author)
     // articles: Article[]
