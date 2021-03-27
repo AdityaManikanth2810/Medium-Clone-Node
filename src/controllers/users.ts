@@ -1,7 +1,7 @@
 import {getRepository} from "typeorm";
 import {User} from "../entities/User";
 import {hashedPassword, matchPassword} from "../utils/password";
-import {Sign} from "../utils/jwt";
+import {sign} from "../utils/jwt";
 import SanitizeUser from "../utils/security";
 
 interface UserSignUpData {
@@ -39,7 +39,7 @@ export async function createUser(data: UserSignUpData) {
 
         await getRepository(User).save(user);
 
-        user.token = await Sign(user)
+        user.token = await sign(user)
         return SanitizeUser(user);
     } catch (e) {
         console.error(e)
@@ -62,9 +62,20 @@ export async function loginUser(data: UserLoginData) {
     //Check if password matches
     const match = await matchPassword(user.password!, data.password);
 
-    if (match === false) throw new Error('Incorrect Password');
+    if (!match) throw new Error('Incorrect Password');
 
-    user.token = await Sign(user);
+    user.token = await sign(user);
+
+    return SanitizeUser(user);
+}
+
+export async function getUserByEmail(email:string) {
+
+    const repo = getRepository(User);
+
+    //Check if email exists
+    const user = await repo.findOne(email) as User
+    if (!user) throw new Error('No User with this email id');
 
     return SanitizeUser(user);
 }

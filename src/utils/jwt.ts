@@ -1,10 +1,10 @@
-import jwt, {VerifyErrors} from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import {User} from "../entities/User";
 
 // TODO: Move to a config file
 const JWT_SECRET = 'some-very-very-secret-string-no-one-can-guess'
 
-export async function Sign(user: User): Promise<string> {
+export async function sign(user: User): Promise<string> {
 
     return new Promise((resolve, reject) => {
         jwt.sign({
@@ -17,7 +17,7 @@ export async function Sign(user: User): Promise<string> {
     })
 }
 
-export async function Decode(token: string): Promise<User> {
+export async function decode(token: string): Promise<User> {
     return new Promise((resolve, reject) => {
         jwt.verify(token, JWT_SECRET, ((err, decoded: object | undefined) => {
             if (err) return reject(err)
