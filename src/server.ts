@@ -5,6 +5,7 @@ import {User} from "./entities/User";
 import {usersRoute} from "./routes/users";
 import {userRoute} from "./routes/user";
 import bodyParser from "body-parser";
+import {articlesRoute} from "./routes/articles";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get('/', (req, res, next) => {
 
 app.use('/api/users',usersRoute);
 app.use('/api/user',userRoute);
+app.use('/api/articles',articlesRoute);
 
 
 createConnection({
@@ -26,7 +28,7 @@ createConnection({
     database: 'mediumClone',
     entities: [Article, User],
     synchronize: true,
-    dropSchema: true, // TODO: Not for production
+    // dropSchema: true, // TODO: Not for production
     logging: true,
     logger: 'advanced-console'
 })
